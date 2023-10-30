@@ -30,7 +30,7 @@
 
 <script>
 
-import { getPinCode, getMsgCode } from '@/api/login'
+import { getPinCode, getMsgCode, codeLogin } from '@/api/login'
 import { Toast } from 'vant'
 
 export default {
@@ -89,8 +89,18 @@ export default {
       }
     },
 
-    login () {
-
+    async login () {
+      if (!this.validFn()) {
+        return
+      }
+      if (!/^\d{6}$/.test(this.msgCode)) {
+        this.$toast('请输入正确的手机验证码')
+        return
+      }
+      const res = await codeLogin(this.mobile, this.msgCode)
+      console.log(res)
+      this.$toast('登录成功')
+      this.$router.push('/')
     }
 
   },
