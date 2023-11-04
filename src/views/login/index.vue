@@ -40,9 +40,10 @@ export default {
   },
   data () {
     return {
-
+      // 接收手机号跟验证码并验证是否正确
       picUrl: '',
       picKey: '',
+
       totalSecond: 60, // 总秒数
       second: 60, // 当前秒数，
       timer: '',
@@ -77,6 +78,7 @@ export default {
       if (!this.timer && this.second === this.totalSecond) {
         // 发送请求
         await getMsgCode(this.picCode, this.picKey, this.mobile)
+
         this.$toast('短信发送成功，注意查收')
         this.timer = setInterval(() => {
           this.second--
@@ -98,6 +100,7 @@ export default {
         return
       }
       const res = await codeLogin(this.mobile, this.msgCode)
+      this.$store.commit('user/setUserInfo', res.data)
       console.log(res)
       this.$toast('登录成功')
       this.$router.push('/')

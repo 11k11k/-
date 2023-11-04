@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '@/views/login'
+import Login from '@/views/login/index.vue'
 import Layout from '@/views/layout/index.vue'
 import Myorder from '@/views/myorder'
 import Prodetail from '@/views/prodetail'
