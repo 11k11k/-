@@ -10,6 +10,7 @@ import Cart from '@/views/layout/cart.vue'
 import Category from '@/views/layout/category.vue'
 import Home from '@/views/layout/home.vue'
 import User from '@/views/layout/user.vue'
+import store from '@/store/index.js'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -40,5 +41,23 @@ const router = new VueRouter({
     }
   ]
 })
+// 定义数组，存放需要登录访问的页面
+const authUrl = ['/pay', '/myorder']
+router.beforeEach((to, from, next) => {
+  // console.log(to, from, next)
+  if (!authUrl.includes(to.path)) {
+    next()
+    return
+  }
+  const token = store.getters.token
 
+  // 如果token存在直接通行
+  if (token) {
+    next()
+  } else {
+    next('/login')
+  }
+}
+
+)
 export default router
